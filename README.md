@@ -194,7 +194,6 @@ This project is optimized for **Streamlit Cloud**.
 
 ## 👨‍💻 Credits
 
-* 
-**Developer:** Annant R Gautam 
+* **Developer:** Annant R Gautam 
 * **Dataset Source:** RSNA Pneumonia Detection Challenge
 * **Frameworks:** Ultralytics (YOLO), Streamlit, PyTorch
