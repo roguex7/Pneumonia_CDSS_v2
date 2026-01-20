@@ -5,7 +5,6 @@
 
   **Welcome to the second generation of the Pneumonia Clinical Decision Support System. This version represents a complete architectural overhaul, focusing on balancing medical precision with real-world deployment efficiency.**
   
-<img width="1920" height="2450" alt="image" src="https://github.com/user-attachments/assets/fbc526c0-6ebb-4cdf-b127-c83da022376a" />
 
 ## 📋 Executive Summary
 
@@ -18,7 +17,6 @@ While **v1.0** was a successful prototype proving the concept using YOLOv5, **v2
 ## 🚀 V1.0 vs. V2.0: The Performance Leap
 
 The transition from Version 1 to Version 2 was driven by the need to solve critical bottlenecks in training time and deployment stability.
-<img width="766" height="628" alt="image" src="https://github.com/user-attachments/assets/bf7b96f1-2b7a-4716-9139-e6ccfbd4d66b" />
 
 | Feature | 🛑 Version 1.0 (Legacy) | ✅ Version 2.0 (Production) | 📈 Impact / Improvement |
 | :--- | :--- | :--- | :--- |
@@ -32,9 +30,54 @@ The transition from Version 1 to Version 2 was driven by the need to solve criti
 
 ---
 
+## 🛠️ Technology Stack & Engineering Decisions
+Each technology was chosen to build a robust, scalable, and fast medical application.
+
+**1. AI Core:** YOLO26 Nano (via Ultralytics)
+Why? The Nano architecture provides high-resolution feature extraction (640px) while maintaining a small footprint (~5MB).
+
+**Robustness:** Trained using Automatic Mixed Precision (AMP) on an NVIDIA RTX 2050, allowing for efficient VRAM utilization without precision degradation.
+
+**2. Frontend:** Streamlit v1.4
+Why? Provides a reactive, secure web interface.
+
+**Robustness:** Optimized with use_container_width to handle high-resolution DICOM-sourced images without UI lag or warning overhead.
+
+**3. Data Processing:** Pandas & FPDF
+Why? Doctors need data and patients need reports.
+
+**Robustness:** Pandas extracts raw bounding box data (xmin, ymin, xmax, ymax) for clinical verification. FPDF ensures clinical findings are documented in a standardized PDF format.
+
+---
+
+## 📊 V2.0 Training & Performance Metrics
+**The model was trained for 100 epochs on a balanced subset of the RSNA pneumonia dataset.**
+
+**Precision (P):** 44.8%
+
+**Recall (R):** 49.3%
+
+**mAP50:** 41.9%
+
+**Parameters:** 2,375,031
+
+---
+
 ## 🏗️ System Architecture
 
 The v2.0 pipeline consists of three distinct stages designed for transparency and speed.
+
+**Image Preprocessing: The system accepts JPG/PNG chest X-rays and resizes them to 640x640 internally for consistent feature extraction.**
+
+**AI Detection:** The YOLO26n engine performs a single-pass scan, identifying areas of pulmonary consolidation or opacity.
+
+**Result Aggregation:** Raw detections are filtered through a user-adjustable Confidence Threshold (Default: 0.25).
+
+**Reporting:** The system generates two distinct outputs:
+
+**Developer Data:** A CSV file containing precise object coordinates.
+
+**Clinical Report:** A PDF summarizing findings and impressions for radiologists.
 
 ### 1. Data Engineering (The "Goldilocks" Split)
 
@@ -57,7 +100,7 @@ We utilized the **Ultralytics YOLO26 Nano** backbone.
 The inference results are not just drawn on the screen; they are structured into:
 
 * **Visual Layer:** Bounding boxes with confidence scores.
-* 
+  
 **Data Layer (Pandas):** Precise `xmin, ymin, xmax, ymax` coordinates for developers.
 
 
