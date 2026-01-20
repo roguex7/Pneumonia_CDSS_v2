@@ -2,6 +2,9 @@
 
 > **A Next-Generation Clinical Decision Support System for Real-Time X-Ray Analysis.**
 
+
+  **Welcome to the second generation of the Pneumonia Clinical Decision Support System. This version represents a complete architectural overhaul, focusing on balancing medical precision with real-world deployment efficiency.**
+  
 <img width="1920" height="2450" alt="image" src="https://github.com/user-attachments/assets/fbc526c0-6ebb-4cdf-b127-c83da022376a" />
 
 ## 📋 Executive Summary
