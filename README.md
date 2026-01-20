@@ -2,9 +2,12 @@
 
 > **A Next-Generation Clinical Decision Support System for Real-Time X-Ray Analysis.**
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://pneumoniacdssv2.streamlit.app/)
+
 
   **Welcome to the second generation of the Pneumonia Clinical Decision Support System. This version represents a complete architectural overhaul, focusing on balancing medical precision with real-world deployment efficiency.**
   
+  <img width="1920" height="2450" alt="image" src="https://github.com/user-attachments/assets/0a80c9bc-d022-4201-b8b7-4343f829ef11" />
 
 ## 📋 Executive Summary
 
@@ -106,32 +109,8 @@ The inference results are not just drawn on the screen; they are structured into
 
 * **Report Layer (FPDF):** A generated PDF for doctors.
 
-graph LR
-    A[User Upload] -->|X-Ray Image| B(Preprocessing)
-    
-    subgraph "Preprocessing"
-    B --> C{Resize 640px}
-    C --> D[Normalize]
-    end
-    
-    D -->|Tensor| E[YOLO26 Nano Model]
-    
-    subgraph "Inference Engine"
-    E -->|Raw Detections| F[NMS Filter]
-    end
-    
-    F -->|Bbox + Conf| G[Post-Processing]
-    
-    subgraph "Output Generation"
-    G --> H[Pandas DataFrame]
-    G --> I[FPDF Generator]
-    end
-    
-    H --> J[CSV Export]
-    I --> K[PDF Medical Report]
-    
-    style E fill:#f9f,stroke:#333,stroke-width:4px
-    style K fill:#bbf,stroke:#333,stroke-width:2px
+<img width="1762" height="917" alt="pneumonia_cdss_v2 0_architecture" src="https://github.com/user-attachments/assets/3edf990e-1f0e-4971-aeb1-daa244ddf5a7" />
+
 
 ---
 
@@ -139,7 +118,12 @@ graph LR
 
 **Training Environment:** NVIDIA GeForce RTX 2050 (4GB VRAM) | 16GB RAM | Python 3.12
 
-<img width="666" height="302" alt="image" src="https://github.com/user-attachments/assets/26cebf8a-e565-4478-b9f5-2f5fa7adb53e" />
+Metric	Value	Description
+mAP50	41.90%	Mean Average Precision at 0.5 IoU.
+Recall	49.30%	The model flags nearly 50% of all potential anomalies for review.
+Precision	44.80%	Reliability of positive predictions.
+Inference	3.9 ms	Speed per image analysis.
+Model Size	5.2 MB	Extremely portable for web deployment.
 
 <img width="2400" height="1200" alt="results" src="https://github.com/user-attachments/assets/3fd6176a-3c9f-4590-b256-2207ce7f3f24" />
 
@@ -198,15 +182,13 @@ streamlit run app.py
 
 ## ☁️ Deployment Notes
 
+🔗 **Live Demo:** [Click here to launch the CDSS](https://pneumoniacdssv2.streamlit.app/)
+
 This project is optimized for **Streamlit Cloud**.
 
-* 
 **Configuration:** The `requirements.txt` includes `opencv-python-headless` to avoid the common `libGL.so.1` error on Linux servers.
 
-
-* **Model Loading:** The model file `yolo26n_v2.pt` is small enough (5MB) to be hosted directly on GitHub, eliminating the need for Git LFS.
-
-<img width="1920" height="2450" alt="image" src="https://github.com/user-attachments/assets/0a80c9bc-d022-4201-b8b7-4343f829ef11" />
+**Model Loading:** The model file `yolo26n_v2.pt` is small enough (5MB) to be hosted directly on GitHub, eliminating the need for Git LFS.
 
 ---
 
