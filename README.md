@@ -1,12 +1,8 @@
-Here is a comprehensive **README.md** tailored for your **Pneumonia_CDSS_v2** repository. It strictly follows your request to compare V1 vs. V2, detail the new architecture, and leave placeholders for visual assets.
-
----
-
 # 🫁 Pneumonia Detection System v2.0 (CDSS)
 
 > **A Next-Generation Clinical Decision Support System for Real-Time X-Ray Analysis.**
 
-![Image: Hero banner showing the application interface with an X-ray analysis in progress]
+<img width="1920" height="2450" alt="image" src="https://github.com/user-attachments/assets/fbc526c0-6ebb-4cdf-b127-c83da022376a" />
 
 ## 📋 Executive Summary
 
@@ -19,32 +15,17 @@ While **v1.0** was a successful prototype proving the concept using YOLOv5, **v2
 ## 🚀 V1.0 vs. V2.0: The Performance Leap
 
 The transition from Version 1 to Version 2 was driven by the need to solve critical bottlenecks in training time and deployment stability.
+<img width="766" height="628" alt="image" src="https://github.com/user-attachments/assets/bf7b96f1-2b7a-4716-9139-e6ccfbd4d66b" />
 
 | Feature | 🛑 Version 1.0 (Legacy) | ✅ Version 2.0 (Production) | 📈 Impact / Improvement |
-| --- | --- | --- | --- |
-| **AI Model** | YOLOv5 (Medium/Small) | **YOLO26 Nano** | <br>**Ultra-lightweight (~5MB)** for instant cloud loading.
+| :--- | :--- | :--- | :--- |
+| **Training Time** | **13.4 Hours** (RTX 2050) | **5.9 Hours** (RTX 2050) | **56% Faster** convergence due to Nano arch & RAM caching. |
+| **Model Architecture** | YOLOv5 | **YOLO26 Nano** | **Ultra-lightweight** architecture optimized for edge devices. |
+| **Inference Speed** | ~15 ms per image | **3.9 ms per image** | **3.8x Speedup** enabling real-time video analysis. |
+| **Model Size** | ~14 MB | **5.2 MB** | **63% Smaller**, instant cloud loading without Git LFS. |
+| **Dataset Strategy** | Raw Imbalanced | **Balanced Subset (5k)** | **Reduced Bias**: 1:1 split prevents false positives. |
 
- |
-| **Inference Speed** | ~15-20ms per image | **3.9ms per image** | <br>**Real-time** processing capability.
-
- |
-| **Training Time** | ~13.4 Hours (RTX 2050) | **~5.9 Hours (RTX 2050)** | <br>**~56% Faster** convergence due to architecture & caching.
-
- |
-| **Dataset Strategy** | Raw Imbalanced (~26k) | **Balanced Subset (5k)** | <br>**Reduced Bias**: 1:1 split prevents "over-predicting" pneumonia.
-
- |
-| **Deployment** | Local Only (Heavy) | **Cloud Ready** | Optimized for Streamlit Cloud (headless OpenCV).
-
- |
-| **Clinical Output** | Visual Boxes Only | **PDF Report + CSV Data** | Full **audit trail** for medical records.
-
- |
-| **UI Experience** | Deprecated Warnings | **Modern Streamlit UI** | Clean interface with `use_container_width` optimization.
-
- |
-
-![Image: Bar chart comparing V1 vs V2 training time and model size]
+<img width="3000" height="1800" alt="v1_vs_v2_comparison" src="https://github.com/user-attachments/assets/83df47ae-1399-463f-8a77-68937f23e28b" />
 
 ---
 
@@ -79,7 +60,32 @@ The inference results are not just drawn on the screen; they are structured into
 
 * **Report Layer (FPDF):** A generated PDF for doctors.
 
-![Image: System Architecture Diagram showing flow from Input -> Preprocessing -> YOLO26n -> Post-processing -> PDF/CSV Output]
+graph LR
+    A[User Upload] -->|X-Ray Image| B(Preprocessing)
+    
+    subgraph "Preprocessing"
+    B --> C{Resize 640px}
+    C --> D[Normalize]
+    end
+    
+    D -->|Tensor| E[YOLO26 Nano Model]
+    
+    subgraph "Inference Engine"
+    E -->|Raw Detections| F[NMS Filter]
+    end
+    
+    F -->|Bbox + Conf| G[Post-Processing]
+    
+    subgraph "Output Generation"
+    G --> H[Pandas DataFrame]
+    G --> I[FPDF Generator]
+    end
+    
+    H --> J[CSV Export]
+    I --> K[PDF Medical Report]
+    
+    style E fill:#f9f,stroke:#333,stroke-width:4px
+    style K fill:#bbf,stroke:#333,stroke-width:2px
 
 ---
 
@@ -87,25 +93,9 @@ The inference results are not just drawn on the screen; they are structured into
 
 **Training Environment:** NVIDIA GeForce RTX 2050 (4GB VRAM) | 16GB RAM | Python 3.12
 
-| Metric | Value | Description |
-| --- | --- | --- |
-| **mAP50** | **41.9%** | Mean Average Precision at 0.5 IoU.
+<img width="666" height="302" alt="image" src="https://github.com/user-attachments/assets/26cebf8a-e565-4478-b9f5-2f5fa7adb53e" />
 
- |
-| **Recall** | **49.3%** | The model flags nearly 50% of all potential anomalies for review.
-
- |
-| **Precision** | **44.8%** | Reliability of positive predictions.
-
- |
-| **Inference** | **3.9 ms** | Speed per image analysis.
-
- |
-| **Model Size** | **5.2 MB** | Extremely portable for web deployment.
-
- |
-
-![Image: Training graphs showing Loss Convergence and Precision-Recall curves from the runs/ folder]
+<img width="2400" height="1200" alt="results" src="https://github.com/user-attachments/assets/3fd6176a-3c9f-4590-b256-2207ce7f3f24" />
 
 ---
 
@@ -116,14 +106,14 @@ The inference results are not just drawn on the screen; they are structured into
 * Drag-and-drop interface for rapid X-ray screening.
 * Adjustable **Sensitivity Threshold** slider (0.0 - 1.0) to filter weak detections.
 
-![Image: Screenshot of the main dashboard with an analyzed X-ray]
+<img width="1521" height="755" alt="image" src="https://github.com/user-attachments/assets/218e3641-14aa-49d8-b070-859dc2135a29" />
 
 ### 📄 Automated Medical Reporting
 
 * **PDF Report:** Generates a timestamped, non-editable report with "Findings" and "Clinical Impression" sections.
 * **CSV Export:** Download raw analysis data for hospital audits or research.
 
-![Image: Screenshot of the 'Analysis Report' section with the Data Table and Download Buttons]
+<img width="1557" height="861" alt="image" src="https://github.com/user-attachments/assets/a0f4da3a-db21-4367-844e-769702de8f4b" />
 
 ---
 
@@ -137,7 +127,7 @@ The inference results are not just drawn on the screen; they are structured into
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YourUsername/Pneumonia_CDSS_v2.git
+git clone https://github.com/roguex7/Pneumonia_CDSS_v2.git
 cd Pneumonia_CDSS_v2
 
 ```
@@ -170,7 +160,7 @@ This project is optimized for **Streamlit Cloud**.
 
 * **Model Loading:** The model file `yolo26n_v2.pt` is small enough (5MB) to be hosted directly on GitHub, eliminating the need for Git LFS.
 
-![Image: Screenshot of the application running successfully in a browser]
+<img width="1920" height="2450" alt="image" src="https://github.com/user-attachments/assets/0a80c9bc-d022-4201-b8b7-4343f829ef11" />
 
 ---
 
@@ -178,7 +168,5 @@ This project is optimized for **Streamlit Cloud**.
 
 * 
 **Developer:** Annant R Gautam 
-
-
 * **Dataset Source:** RSNA Pneumonia Detection Challenge
 * **Frameworks:** Ultralytics (YOLO), Streamlit, PyTorch
