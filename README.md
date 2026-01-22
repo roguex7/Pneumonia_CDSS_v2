@@ -162,9 +162,10 @@ cd Pneumonia_CDSS_v2
 
 ```
 ### 2.  Dataset link:
-    ```bash
-    https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data
-    ```
+
+ ```bash
+ https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data
+ ```
 ### 3. Install Dependencies
 
 **Note:** We use `opencv-python-headless` to ensure compatibility with cloud environments (Linux servers).
