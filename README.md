@@ -161,8 +161,11 @@ git clone https://github.com/roguex7/Pneumonia_CDSS_v2.git
 cd Pneumonia_CDSS_v2
 
 ```
-
-### 2. Install Dependencies
+### 2.  Dataset link:
+    ```bash
+    https://www.kaggle.com/c/rsna-pneumonia-detection-challenge/data
+    ```
+### 3. Install Dependencies
 
 **Note:** We use `opencv-python-headless` to ensure compatibility with cloud environments (Linux servers).
 
@@ -171,7 +174,7 @@ pip install -r requirements.txt
 
 ```
 
-### 3. Launch the Application
+### 4. Launch the Application
 
 ```bash
 streamlit run app.py
