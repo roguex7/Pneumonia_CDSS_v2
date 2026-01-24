@@ -7,7 +7,7 @@ import pandas as pd
 import io
 
 # --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="Pneumonia CDSS v2.0", page_icon="🫁", layout="wide")
+st.set_page_config(page_title=""🫁 Pneumonia- Clinical Desicion Support System v2.0", page_icon="⚙️", layout="wide")
 
 # --- 1. SETUP PDF CLASS ---
 class PDFReport(FPDF):
@@ -193,4 +193,5 @@ if uploaded_file is not None:
             file_name=f"report_{datetime.now().strftime('%H%M%S')}.pdf",
             mime="application/pdf",
             use_container_width=True
+
         )
