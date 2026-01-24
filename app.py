@@ -7,7 +7,11 @@ import pandas as pd
 import io
 
 # --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="🫁 Pneumonia- Clinical Desicion Support System v2.0", page_icon=":gear:", layout="wide")
+st.set_page_config(
+    page_title="Pneumonia CDSS v2.0", 
+    page_icon="🫁", 
+    layout="wide"
+)
 
 # --- 1. SETUP PDF CLASS ---
 class PDFReport(FPDF):
@@ -51,7 +55,7 @@ def create_pdf(img_file, prediction_text, dataframe, timestamp):
         
         for index, row in dataframe.iterrows():
             coords = f"{row['xmin']:.1f}, {row['ymin']:.1f}, {row['xmax']:.1f}, {row['ymax']:.1f}"
-            line = f"{row['name']:<15} {row['confidence']:.4f}     {coords}"
+            line = f"{row['name']:<15} {row['confidence']:.4f}      {coords}"
             pdf.cell(0, 5, txt=line, ln=True)
 
     # Disclaimer
@@ -69,7 +73,8 @@ def load_model():
 model = load_model()
 
 # --- 3. SIDEBAR ---
-st.sidebar.title("🫁 CDSS Settings")
+# Change 2: Sidebar header set to Gear icon ⚙️
+st.sidebar.title("⚙️ CDSS Settings Menu")
 confidence_threshold = st.sidebar.slider("Sensitivity Threshold", 0.0, 1.0, 0.25, 0.05)
 st.sidebar.markdown("---")
 st.sidebar.info(
@@ -80,7 +85,8 @@ st.sidebar.info(
 )
 
 # --- 4. MAIN INTERFACE ---
-st.title("Pneumonia Detection System (v2.0)")
+# Change 3: Main Page Title set to Lungs icon 🫁
+st.title("🫁 Pneumonia - Clinical Decision Support System v2.0")
 st.write("Upload a Chest X-Ray for automated opacity detection and reporting.")
 
 uploaded_file = st.file_uploader("Choose an X-ray...", type=["jpg", "png", "jpeg"])
@@ -95,13 +101,11 @@ if uploaded_file is not None:
     
     with col1:
         st.subheader("Original Scan")
-        # FIXED: Replaced use_column_width with use_container_width
         st.image(image, use_container_width=True)
 
     with col2:
         st.subheader("AI Analysis")
         res_plotted = results[0].plot()
-        # FIXED: Replaced use_column_width with use_container_width
         st.image(res_plotted, use_container_width=True)
 
     # C. Build Data Table
@@ -193,6 +197,4 @@ if uploaded_file is not None:
             file_name=f"report_{datetime.now().strftime('%H%M%S')}.pdf",
             mime="application/pdf",
             use_container_width=True
-
         )
-
