@@ -7,7 +7,7 @@ import pandas as pd
 import io
 
 # --- PAGE CONFIGURATION ---
-st.set_page_config(page_title=""🫁 Pneumonia- Clinical Desicion Support System v2.0", page_icon="⚙️", layout="wide")
+st.set_page_config(page_title="🫁" Pneumonia- Clinical Desicion Support System v2.0", page_icon="⚙️", layout="wide")
 
 # --- 1. SETUP PDF CLASS ---
 class PDFReport(FPDF):
